@@ -1,0 +1,295 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-17 15:55+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\config\settings\base.py:34
+msgid "English"
+msgstr "Английский"
+
+#: .\config\settings\base.py:35
+msgid "Russian"
+msgstr "Русский"
+
+#: .\pottery\account\apps.py:7
+msgid "Account"
+msgstr "Пользователи"
+
+#: .\pottery\account\models.py:24
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: .\pottery\account\models.py:27
+msgid "Required. 128 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr "Требуется не более 128 символов. Только буквы, цифры и @/./+/-/_."
+
+#: .\pottery\account\models.py:30
+msgid "A user with that username already exists."
+msgstr "Данное имя пользователя уже зарегистрировано в системе."
+
+#: .\pottery\account\models.py:34 .\pottery\master_class\models.py:11
+msgid "First name"
+msgstr "Имя"
+
+#: .\pottery\account\models.py:35
+msgid "Last name"
+msgstr "Фамилия"
+
+#: .\pottery\account\models.py:36
+msgid "Middle name"
+msgstr "Отчество"
+
+#: .\pottery\account\models.py:38
+msgid "Email"
+msgstr "Электронная почта"
+
+#: .\pottery\account\models.py:39 .\pottery\master_class\models.py:13
+msgid "Phone number"
+msgstr "Номер телефона"
+
+#: .\pottery\account\models.py:44 .\pottery\organization\models.py:48
+msgid "Filiations"
+msgstr "Филиалы"
+
+#: .\pottery\account\models.py:48
+msgid "Staff status"
+msgstr "Статус персонала"
+
+#: .\pottery\account\models.py:50
+msgid "Designates whether the user can log into this admin site."
+msgstr "Указывает, может ли пользователь войти на этот сайт администратора."
+
+#: .\pottery\account\models.py:53 .\pottery\core\models.py:21
+msgid "Is active?"
+msgstr "Запись активна?"
+
+#: .\pottery\account\models.py:56
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+"Указывает, должен ли этот пользователь считаться активным. Снимите этот "
+"флажок вместо удаления учетных записей."
+
+#: .\pottery\account\models.py:60
+msgid "Date joined"
+msgstr "Дата присоединения"
+
+#: .\pottery\account\models.py:68
+msgid "User"
+msgstr "Пользователь"
+
+#: .\pottery\account\models.py:69
+msgid "Users"
+msgstr "Пользователи"
+
+#: .\pottery\core\apps.py:7
+msgid "Core"
+msgstr "Ядро"
+
+#: .\pottery\core\models.py:16
+msgid "Identifier"
+msgstr "Идентификатор"
+
+#: .\pottery\core\models.py:18
+msgid "Creation datetime"
+msgstr "Дата создания"
+
+#: .\pottery\core\models.py:19
+msgid "Updating datetime"
+msgstr "Дата обновления"
+
+#: .\pottery\master_class\apps.py:7
+msgid "Master class"
+msgstr "Мастер класс"
+
+#: .\pottery\master_class\choices.py:6
+msgid "New"
+msgstr "Новый"
+
+#: .\pottery\master_class\choices.py:7
+msgid "In progress"
+msgstr "В работе"
+
+#: .\pottery\master_class\choices.py:8
+msgid "Ready"
+msgstr "Готов"
+
+#: .\pottery\master_class\choices.py:9
+msgid "Given"
+msgstr "Выдан"
+
+#: .\pottery\master_class\choices.py:10
+msgid "Overdue"
+msgstr "Просрочен"
+
+#: .\pottery\master_class\choices.py:11
+msgid "Broken"
+msgstr "Брак"
+
+#: .\pottery\master_class\choices.py:12
+msgid "Repeat visit"
+msgstr "Повторный визит"
+
+#: .\pottery\master_class\models.py:17 .\pottery\master_class\models.py:98
+msgid "Client"
+msgstr "Клиент"
+
+#: .\pottery\master_class\models.py:18
+msgid "Clients"
+msgstr "Клиенты"
+
+#: .\pottery\master_class\models.py:33 .\pottery\organization\models.py:8
+#: .\pottery\organization\models.py:17 .\pottery\organization\models.py:35
+msgid "Name"
+msgstr "Название"
+
+#: .\pottery\master_class\models.py:34
+msgid "Visits count"
+msgstr "Количество визитов"
+
+#: .\pottery\master_class\models.py:38
+msgid "Master class program"
+msgstr "Программа мастер класса"
+
+#: .\pottery\master_class\models.py:39
+msgid "Master class programs"
+msgstr "Программы мастер классов"
+
+#: .\pottery\master_class\models.py:46
+msgid "Visit records"
+msgstr "Записи по визиту"
+
+#: .\pottery\master_class\models.py:51
+msgid "Master class visit"
+msgstr "Визит мастер класса"
+
+#: .\pottery\master_class\models.py:52
+msgid "Master class visits"
+msgstr "Визиты мастер классов"
+
+#: .\pottery\master_class\models.py:60
+msgid "Enrolled client"
+msgstr "Записанный клиент"
+
+#: .\pottery\master_class\models.py:66
+msgid "Selected master"
+msgstr "Выбранный мастер"
+
+#: .\pottery\master_class\models.py:72
+msgid "Selected master class program"
+msgstr "Выбранная программа мастер класса"
+
+#: .\pottery\master_class\models.py:77
+msgid "Record workpieces"
+msgstr "Изделие"
+
+#: .\pottery\master_class\models.py:83
+msgid "Master class record"
+msgstr "Запись на мастер класс"
+
+#: .\pottery\master_class\models.py:84
+msgid "Master class records"
+msgstr "Записи на мастер классы"
+
+#: .\pottery\master_class\models.py:92 .\pottery\master_class\models.py:146
+msgid "Photo"
+msgstr "Фотография"
+
+#: .\pottery\master_class\models.py:106
+msgid "Master"
+msgstr "Мастер"
+
+#: .\pottery\master_class\models.py:111
+msgid "Workpiece progress status"
+msgstr "Статус изделия"
+
+#: .\pottery\master_class\models.py:116
+msgid "Glazed?"
+msgstr "Покрыто глазурью?"
+
+#: .\pottery\master_class\models.py:118
+msgid "Expire date"
+msgstr "Дата просрочки"
+
+#: .\pottery\master_class\models.py:123
+msgid "Comment"
+msgstr "Примечание"
+
+#: .\pottery\master_class\models.py:130
+msgid "Workpiece"
+msgstr "Изделие"
+
+#: .\pottery\master_class\models.py:131
+msgid "Workpieces"
+msgstr "Изделия"
+
+#: .\pottery\master_class\models.py:142
+msgid "Path to file"
+msgstr "Путь к файлу"
+
+#: .\pottery\master_class\models.py:147
+msgid "Photos"
+msgstr "Фотографии"
+
+#: .\pottery\organization\apps.py:7
+msgid "Organization"
+msgstr "Организация"
+
+#: .\pottery\organization\models.py:12 .\pottery\organization\models.py:23
+msgid "City"
+msgstr "Город"
+
+#: .\pottery\organization\models.py:13
+msgid "Cities"
+msgstr "Города"
+
+#: .\pottery\organization\models.py:28 .\pottery\organization\models.py:42
+msgid "Street"
+msgstr "Улица"
+
+#: .\pottery\organization\models.py:29
+msgid "Streets"
+msgstr "Улицы"
+
+#: .\pottery\organization\models.py:36
+msgid "Franchise?"
+msgstr "Франшиза?"
+
+#: .\pottery\organization\models.py:47
+msgid "Filiation"
+msgstr "Филиал"
+
+#: .\pottery\templates\allauth\layouts\entrance.html:8
+#: .\pottery\templates\base.html:90
+msgid "Sign In"
+msgstr "Регистрация"
+
+#: .\pottery\templates\base.html:75
+msgid "My Profile"
+msgstr "Мой профиль"
+
+#: .\pottery\templates\base.html:79
+msgid "Sign Out"
+msgstr "Выход"
+
+#: .\pottery\templates\base.html:85
+msgid "Sign Up"
+msgstr "Вход"
