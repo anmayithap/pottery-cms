@@ -31,6 +31,11 @@ ENV VENV "$PROJECT_DIR/venv"
 
 WORKDIR ${PROJECT_DIR}
 
+RUN apk add --no-cache --update \
+    gettext \
+    && rm -rf ~/.cache/* /usr/local/share/man /tmp/* \
+    && exit 0
+
 COPY --from=compiller ${VENV} ${VENV}
 
 ENV PATH ${VENV}/bin:${PATH}
