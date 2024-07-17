@@ -1,0 +1,171 @@
+[tool.poetry]
+name = "pottery-cms"
+version = "0.0.1"
+description = "CMS of pottery"
+authors = [
+    "Ruslan Torbeev <ruslan.torbeev@yandex.ru>",
+    "Arseny Sergeev <SergeevAA@tatneft.tatar>",
+]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "3.12.*"
+django = "5.*"
+django-phonenumber-field = { extras = ["phonenumberslite"], version = "^8.0.0" }
+psycopg = { extras = ["binary"], version = "^3.2.1" }
+whitenoise = "^6.7.0"
+argon2-cffi = "^23.1.0"
+gunicorn = "^22.0.0"
+sentry-sdk = "^2.9.0"
+python-dotenv = "^1.0.1"
+django-crispy-forms = "^2.2"
+crispy-bootstrap5 = "^2024.2"
+django-webpack-loader = "^3.1.0"
+
+
+[tool.poetry.group.lint.dependencies]
+mypy = "^1.10.1"
+ruff = "^0.5.1"
+autopep8 = "^2.3.1"
+django-stubs = { extras = ["compatible-mypy"], version = "^5.0.2" }
+djlint = "^1.34.1"
+
+
+[tool.poetry.group.dev.dependencies]
+ipython = "^8.26.0"
+pre-commit = "^3.7.1"
+django-debug-toolbar = "^4.4.6"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+# Enable the pycodestyle (`E`) and Pyflakes (`F`) rules by default.
+# Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
+# McCabe complexity (`C901`) by default.
+select = [
+    "E",
+    "F",
+    "W",
+    "B",   # flake8-bugbear
+    "D",   # pydocstyle
+    "I",   # isort
+    "N",   # pep8-naming
+    "COM", # flake8-commas
+    "ARG", # flake8-unused-arguments
+    "PTH", # flake8-use-pathlib
+]
+ignore = [
+    "D100",   # Missing docstring in public module
+    "D102",
+    "D104",
+    "D105",
+    "D106",
+    "D101",
+    "D107",   # Missing docstring in __init__
+    "ARG001", # Unused function argument
+    "ARG002",
+]
+
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".git",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".pytest_cache",
+    ".tox",
+    ".venv",
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git-rewrite",
+    ".hg",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".svn",
+    "__pypackages__",
+    "__pycache__",
+    "venv",
+    "docs",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "*/migrations/*.py",
+    "staticfiles/*",
+]
+
+line-length = 120
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.lint.per-file-ignores]
+
+"tests/*" = ["D"]
+
+[tool.autopep8]
+
+max_line_length = 120
+
+[tool.mypy]
+
+plugins = ["mypy_django_plugin.main"]
+
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+
+strict_optional = true
+
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+
+extra_checks = true
+strict_equality = true
+
+[tool.django-stubs]
+
+django_settings_module = "config.settings.local"
+strict_settings = false
+
+[[tool.mypy.overrides]]
+
+module = "*.migrations.*"
+
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+
+module = "phonenumber_field.*"
+
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+
+module = "debug_toolbar"
+
+ignore_missing_imports = true
+
+[tool.djlint]
+blank_line_after_tag = "load,extends"
+close_void_tags = true
+format_css = true
+format_js = true
+ignore = "H006,H030,H031,T002"
+include = "H017,H035"
+indent = 2
+max_line_length = 120
+profile = "django"
+
+[tool.djlint.css]
+indent_size = 2
+
+[tool.djlint.js]
+indent_size = 2
