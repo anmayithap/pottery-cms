@@ -1,5 +1,6 @@
 from django.contrib.postgres import indexes
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
 from pottery.core.models import BaseModel
@@ -7,14 +8,14 @@ from pottery.master_class.choices import Status
 
 
 class Client(BaseModel):
-    first_name = models.CharField('Имя', max_length=32)
+    first_name = models.CharField(_('First name'), max_length=32)
 
-    phone_number = PhoneNumberField('Номер телефона')
+    phone_number = PhoneNumberField(_('Phone number'), unique=True)
 
     class Meta:
         db_table = 'client'
-        verbose_name = 'Клиент'
-        verbose_name_plural = 'Клиенты'
+        verbose_name = _('Client')
+        verbose_name_plural = _('Clients')
 
         indexes = (
             indexes.HashIndex(
@@ -29,73 +30,105 @@ class Client(BaseModel):
 
 
 class Program(BaseModel):
-    name = models.CharField('Название', max_length=128)
-    visits = models.SmallIntegerField('Количество посещений')
+    name = models.CharField(_('Name'), max_length=128)
+    visits = models.SmallIntegerField(_('Visits count'))
 
     class Meta:
         db_table = 'program'
-        verbose_name = 'Программа мастер-класса'
-        verbose_name_plural = 'Программы мастер-классов'
+        verbose_name = _('Master class program')
+        verbose_name_plural = _('Master class programs')
 
 
 class Visit(BaseModel):
-    client = models.ForeignKey(
-        'master_class.Client',
-        on_delete=models.PROTECT,
-        related_name='client_visits',
-    )
-    master = models.ForeignKey(
-        'account.User',
-        on_delete=models.PROTECT,
-        related_name='master_visits',
-    )
-    program = models.ForeignKey(
-        'master_class.Program',
-        on_delete=models.PROTECT,
-        related_name='program_visits',
-    )
-    work_piece = models.ForeignKey(
-        'master_class.WorkPiece',
-        on_delete=models.PROTECT,
-        related_name='work_piece_visits',
-        blank=True,
-        null=True,
+    records = models.ManyToManyField(
+        'master_class.Record',
+        related_name='visits',
+        verbose_name=_('Visit records'),
     )
 
     class Meta:
         db_table = 'visit'
-        verbose_name = 'Визит мастер-класса'
-        verbose_name_plural = 'Визиты мастер-классов'
+        verbose_name = _('Master class visit')
+        verbose_name_plural = _('Master class visits')
+
+
+class Record(BaseModel):
+    client = models.ForeignKey(
+        'master_class.Client',
+        on_delete=models.PROTECT,
+        related_name='client_records',
+        verbose_name=_('Enrolled client'),
+    )
+    master = models.ForeignKey(
+        'account.User',
+        on_delete=models.PROTECT,
+        related_name='master_records',
+        verbose_name=_('Selected master'),
+    )
+    program = models.ForeignKey(
+        'master_class.Program',
+        on_delete=models.PROTECT,
+        related_name='program_records',
+        verbose_name=_('Selected master class program'),
+    )
+    work_pieces = models.ManyToManyField(
+        'master_class.WorkPiece',
+        related_name='records',
+        verbose_name=_('Record workpieces'),
+        blank=True,
+    )
+
+    class Meta:
+        db_table = 'record'
+        verbose_name = _('Master class record')
+        verbose_name_plural = _('Master class records')
 
 
 class WorkPiece(BaseModel):
-    photo = models.ForeignKey(
+    photo = models.OneToOneField(
         'master_class.Photo',
         on_delete=models.PROTECT,
-        related_name='work_pieces',
+        related_name='workpiece',
+        verbose_name=_('Photo'),
+    )
+    client = models.ForeignKey(
+        'master_class.Client',
+        on_delete=models.PROTECT,
+        related_name='client_workpieces',
+        verbose_name=_('Client'),
+        blank=True,
+        null=True,
+    )
+    master = models.ForeignKey(
+        'account.User',
+        on_delete=models.PROTECT,
+        related_name='master_workpieces',
+        verbose_name=_('Master'),
+        blank=True,
+        null=True,
     )
     status = models.CharField(
-        'Статус изделия',
+        _('Workpiece progress status'),
         max_length=16,
         choices=Status,
         default=Status.NEW,
     )
-    is_glazed = models.BooleanField('Покрыто глазурью', default=False)
+    is_glazed = models.BooleanField(_('Glazed?'), default=False)
     expire_date = models.DateTimeField(
-        'Дата просрочки',
+        _('Expire date'),
         null=True,
         blank=True,
     )
     comment = models.TextField(
-        'Примечание',
+        _('Comment'),
         null=True,
         blank=True,
     )
 
     class Meta:
-        db_table = 'work_piece'
-        verbose_name = 'Изделие'
-        verbose_name_plural = 'Изделия'
+        db_table = 'workpiece'
+        verbose_name = _('Workpiece')
+        verbose_name_plural = _('Workpieces')
 
         indexes = (
             indexes.HashIndex(
@@ -106,9 +139,9 @@ class WorkPiece(BaseModel):
 
 
 class Photo(BaseModel):
-    path = models.CharField('Путь к фото', max_length=248)
+    path = models.CharField(_('Path to file'), max_length=248)
 
     class Meta:
         db_table = 'photo'
-        verbose_name = 'Фотография'
-        verbose_name_plural = 'Фотографии'
+        verbose_name = _('Photo')
+        verbose_name_plural = _('Photos')

@@ -1,6 +1,7 @@
 from typing import ParamSpec, Self
 
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 _P = ParamSpec('_P')
 
@@ -12,12 +13,12 @@ class ActiveQuerySet(models.QuerySet):
 
 
 class BaseModel(models.Model):
-    id = models.AutoField('Идентификатор', primary_key=True)
+    id = models.AutoField(_('Identifier'), primary_key=True)
 
-    created = models.DateTimeField('Дата создания', auto_now_add=True)
-    updated = models.DateTimeField('Дата последнего обновления', auto_now=True, blank=True, null=True)
+    created = models.DateTimeField(_('Creation datetime'), auto_now_add=True)
+    updated = models.DateTimeField(_('Updating datetime'), auto_now=True, blank=True, null=True)
 
-    is_active = models.BooleanField('Активная запись?', default=True, db_index=True)
+    is_active = models.BooleanField(_('Is active?'), default=True, db_index=True)
 
     objects = models.Manager()
     active_objects = ActiveQuerySet.as_manager()

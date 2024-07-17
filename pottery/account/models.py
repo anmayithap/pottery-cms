@@ -1,100 +1,72 @@
-from typing import ClassVar, Generic, ParamSpec, Self, TypeVar
+from typing import ClassVar, Final, Generic, Self, TypeVar
 
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import UserManager as StandaloneUserManager
+from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.contrib.postgres import indexes
 from django.db import models
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
-from pottery.account.exceptions import (
-    PasswordRequiredError,
-    PhoneNumberRequiredError,
-    StaffUserAttributeError,
-    SuperUserAttributeError,
-)
-
-_P = ParamSpec('_P')
-
 _U = TypeVar('_U', bound='User')
+
+_USERNAME_VALIDATOR: Final[UnicodeUsernameValidator] = UnicodeUsernameValidator()
 
 
 class UserManager(Generic[_U], StandaloneUserManager):
     model: type[_U]
 
-    def create_user(  # type: ignore[override,valid-type]
-        self: Self,
-        phone_number: str | None,
-        password: str | None,
-        **extra_fields: _P.kwargs,
-    ) -> _U:
-        extra_fields.setdefault('is_staff', False)
-        extra_fields.setdefault('is_superuser', False)
-
-        return self._create_user(phone_number, password, **extra_fields)
-
-    def create_superuser(  # type: ignore[override,valid-type]
-        self,
-        phone_number: str | None,
-        password: str | None,
-        **extra_fields: _P.kwargs,
-    ) -> _U:
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-
-        if extra_fields.get('is_staff') is not True:
-            raise StaffUserAttributeError
-        if extra_fields.get('is_superuser') is not True:
-            raise SuperUserAttributeError
-
-        return self._create_user(phone_number, password, **extra_fields)
-
-    def _create_user(  # type: ignore[valid-type]
-        self: Self,
-        phone_number: str | None,
-        password: str | None,
-        **extra_fields: _P.kwargs,
-    ) -> _U:
-        if not phone_number:
-            raise PhoneNumberRequiredError
-        if not password:
-            raise PasswordRequiredError
-
-        user: _U = self.model(phone_number=phone_number, **extra_fields)
-        user.password = make_password(password)
-
-        user.save(using=self._db)
-
-        return user
-
 
 class User(AbstractBaseUser, PermissionsMixin):
-    first_name = models.CharField('Имя', max_length=32)
-    last_name = models.CharField('Фамилия', max_length=32, blank=True, null=True)
-    middle_name = models.CharField('Отчество', max_length=32, blank=True, null=True)
-
-    phone_number = PhoneNumberField(
-        'Номер телефона',
+    username = models.CharField(
+        _('Username'),
+        max_length=128,
         unique=True,
+        help_text=_('Required. 128 characters or fewer. Letters, digits and @/./+/-/_ only.'),
+        validators=[_USERNAME_VALIDATOR],
+        error_messages={
+            'unique': _('A user with that username already exists.'),
+        },
     )
+
+    first_name = models.CharField(_('First name'), max_length=32)
+    last_name = models.CharField(_('Last name'), max_length=32, blank=True, null=True)
+    middle_name = models.CharField(_('Middle name'), max_length=32, blank=True, null=True)
+
+    email = models.EmailField(_('Email'), unique=True, blank=True, null=True)
+    phone_number = PhoneNumberField(_('Phone number'), unique=True)
 
     filiations = models.ManyToManyField(
         'organization.Filiation',
         related_name='users',
-        verbose_name='Филиалы',
+        verbose_name=_('Filiations'),
     )
 
-    is_staff = models.BooleanField(default=False)
+    is_staff = models.BooleanField(
+        _('Staff status'),
+        default=False,
+        help_text=_('Designates whether the user can log into this admin site.'),
+    )
+    is_active = models.BooleanField(
+        _('Is active?'),
+        default=True,
+        help_text=_(
+            'Designates whether this user should be treated as active. '
+            'Unselect this instead of deleting accounts.',
+        ),
+    )
+    date_joined = models.DateTimeField(_('Date joined'), default=timezone.now)
 
-    USERNAME_FIELD = 'phone_number'
+    USERNAME_FIELD = 'username'
 
     objects: ClassVar[UserManager] = UserManager()
 
     class Meta:
         db_table = 'user'
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
+        verbose_name = _('User')
+        verbose_name_plural = _('Users')
 
         indexes = (
             indexes.HashIndex(
@@ -108,4 +80,4 @@ class User(AbstractBaseUser, PermissionsMixin):
         )
 
     def __str__(self: Self) -> str:
-        return f'{self.__class__.__name__}: {self.phone_number!s}'
+        return f'{self.__class__.__name__}: {self.username!s}'
