@@ -7,6 +7,9 @@ x-base-build: &x-base-build
   volumes:
     - ./config:/opt/pottery/config:z
     - ./pottery:/opt/pottery/pottery:z
+    - type: bind
+      source: ./webpack-stats.json
+      target: /opt/pottery/webpack-stats.json
   stdin_open: true
   tty: true
 
@@ -21,8 +24,6 @@ services:
       - -c
       - |
         python manage.py runserver 0.0.0.0:8000
-    ports:
-      - '8000:8000'
     deploy:
       resources:
         limits:
@@ -40,6 +41,7 @@ services:
       - |
         python manage.py migrate
         python manage.py collectstatic --no-input
+        python manage.py compilemessages --locale ru
     deploy:
       resources:
         limits:
@@ -121,11 +123,20 @@ services:
     depends_on:
       - instance
     volumes:
-      - .:/opt/pottery:z
+      - ./webpack:/opt/pottery/webpack:z
+      - ./pottery/static:/opt/pottery/pottery/static:z
+      - type: bind
+        source: ./webpack-stats.json
+        target: /opt/pottery/webpack-stats.json
       - /opt/pottery/node_modules
     command: npm run dev
     ports:
       - '3000:3000'
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
 
 volumes:
   db-data:

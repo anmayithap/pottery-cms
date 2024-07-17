@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Any, Final, Literal, Sequence
 
 import dotenv
+from django.utils.translation import gettext_lazy as _
 from psycopg import IsolationLevel
 
 from config.settings._dbms import DBMSConfig
@@ -27,6 +28,16 @@ LANGUAGE_CODE: Final[str] = 'ru'
 USE_I18N: Final[bool] = True
 
 USE_TZ: Final[bool] = True
+
+
+LANGUAGES: Final[tuple[tuple[str, str], ...]] = (
+    ('en', _('English')),
+    ('ru', _('Russian')),
+)
+
+LOCALE_PATHS: Final[tuple[Path, ...]] = (
+    BASE_DIR / 'locale',
+)
 
 # ==========> DATABASES SECTION
 

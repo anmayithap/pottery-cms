@@ -7,6 +7,7 @@ up-local: merge-dotenv
 
 build-local: merge-dotenv
 	$(command-prefix) build
+	docker system prune -f
 
 down-local:
 	$(command-prefix) down -v
