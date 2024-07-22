@@ -24,3 +24,11 @@ class BaseError(Exception):
             message = message.format(**format)
 
         super().__init__(message)
+
+
+class HTTPClientMaxRetryError(BaseError):
+    message = "Max retries exceeded with url: {url}"
+
+
+class HTTPClientTimeoutError(BaseError):
+    message = "Timeout waiting for response from url: {url}"
