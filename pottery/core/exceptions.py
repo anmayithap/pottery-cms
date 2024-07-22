@@ -26,9 +26,9 @@ class BaseError(Exception):
         super().__init__(message)
 
 
-class HTTPClientMaxRetryError(BaseError):
-    message = "Max retries exceeded."
+class HTTPAdapterMaxRetryError(BaseError):
+    message = 'Max retries exceeded.'
 
 
-class HTTPClientTimeoutError(BaseError):
-    message = "Timeout waiting for response."
+class HTTPAdapterTimeoutError(BaseError):
+    message = 'Timeout waiting for response.'

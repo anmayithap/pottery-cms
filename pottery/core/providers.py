@@ -1,65 +1,55 @@
+from datetime import datetime, timedelta
+from typing import Any, Self
+
 from django.conf import settings
-from urllib3 import PoolManager
-from urllib3.exceptions import MaxRetryError, TimeoutError
-from urllib3.response import HTTPResponse
-from urllib3.util.retry import Retry
 
-from pottery.core.exceptions import HTTPClientMaxRetryError, HTTPClientTimeoutError
-
-
-class HTTPClient:
-    def __init__(self):
-        self.retries = Retry(
-            total=5,
-            backoff_factor=0.2,
-            status_forcelist=[500, 502, 503, 504],
-        )
-        self.http = PoolManager(num_pools=5, retries=self.retries)
-
-    def get(self, url: str, fields: dict = None, headers: dict[str, str] = None) -> HTTPResponse:
-        try:
-            response = self.http.request("GET", url, fields=fields, headers=headers)
-        except MaxRetryError as exc:
-            raise HTTPClientMaxRetryError(url=url) from exc
-        except TimeoutError as exc:
-            raise HTTPClientTimeoutError(url=url) from exc
-
-        return response
-
-    def post(self, url: str, data: str = None, headers: dict[str, str] = None) -> HTTPResponse:
-        try:
-            response = self.http.request("POST", url, json=data, headers=headers)
-        except MaxRetryError as exc:
-            raise HTTPClientMaxRetryError(url=url) from exc
-        except TimeoutError as exc:
-            raise HTTPClientTimeoutError(url=url) from exc
-
-        return response
+from pottery.core.exceptions import HTTPAdapterMaxRetryError, HTTPAdapterTimeoutError
+from pottery.core.protocols import HTTPProtocol
 
 
 class YClientsProvider:
-    def __init__(self, client: HTTPClient) -> None:
-        self.client = client
+    """Провайдер для работы с внешним сервисом YClients."""
 
-    def auth(self) -> str:
+    def __init__(self: Self, client: HTTPProtocol) -> None:
+        self._client = client
+
+    def _build_headers(self: Self, user_token: str | None = None) -> dict[str, str]:
+        headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/vnd.api.v2+json',
+        }
+        if user_token:
+            headers.update([('Authorization', f'Bearer {settings.YCLIENTS_BEARER_TOKEN}, User {user_token}')])
+        else:
+            headers.update([('Authorization', f'Bearer {settings.YCLIENTS_BEARER_TOKEN}')])
+
+        return headers
+
+    def _build_period(self: Self) -> str:
+        start_date = datetime.now() - timedelta(days=settings.YCLIENTS_TIME_PERIOD)
+
+        return start_date.strftime('%Y-%m-%d')
+
+    def auth(self: Self) -> Any:
+        """Аутентификация пользователя и получение пользовательского токена."""
         url = 'https://api.yclients.com/api/v1/auth'
         data = {'login': settings.YCLIENTS_LOGIN, 'password': settings.YCLIENTS_PASSWORD}
-        headers = {
-            'Authorization': f'Bearer {settings.YCLIENTS_BEARER_TOKEN}',
-            'Content-Type': 'application/json',
-            'Accept': 'application/vnd.api.v2+json"',
-        }
-        response = self.client.post(url, data, headers)
+        try:
+            response = self._client.post(url=url, data=data, headers=self._build_headers())
+        except (HTTPAdapterMaxRetryError, HTTPAdapterTimeoutError) as exc:
+            raise exc
+
         user_token = response.json().get('data', {}).get('user_token', '')
 
         return user_token
 
-    def get_records(self, pottery_id: int, user_token: str) -> dict:
+    def get_records(self: Self, pottery_id: int, user_token: str) -> Any:
+        """Получение всех записей."""
         url = f'https://api.yclients.com/api/v1/records/{pottery_id}'
-        headers = {
-            'Authorization': f'Bearer {settings.YCLIENTS_BEARER_TOKEN}, User {user_token}',
-            'Content-Type': 'application/json',
-            'Accept': 'application/vnd.api.v2+json',
-        }
-        response = self.client.get(url, headers=headers)
+        fields = {'start_date': self._build_period()}
+        try:
+            response = self._client.get(url, fields=fields, headers=self._build_headers(user_token))
+        except (HTTPAdapterMaxRetryError, HTTPAdapterTimeoutError) as exc:
+            raise exc
+
         return response.json().get('data', {})
