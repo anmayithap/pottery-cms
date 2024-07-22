@@ -27,8 +27,8 @@ class BaseError(Exception):
 
 
 class HTTPClientMaxRetryError(BaseError):
-    message = "Max retries exceeded with url: {url}"
+    message = "Max retries exceeded."
 
 
 class HTTPClientTimeoutError(BaseError):
-    message = "Timeout waiting for response from url: {url}"
+    message = "Timeout waiting for response."
