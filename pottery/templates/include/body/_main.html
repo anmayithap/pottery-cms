@@ -1,0 +1,14 @@
+<div class="wrapper">
+  {% include 'include/body/_sidebar.html' %}
+  <div class="main-panel">
+    <div class="main-header">
+      {% include 'include/body/_navbar_logo.html' %}
+      {% include 'include/body/_navbar.html' %}
+    </div>
+    <div class="container">
+      {% block content %}
+      {% endblock content %}
+    </div>
+    {% include 'include/body/_footer.html' %}
+  </div>
+</div>

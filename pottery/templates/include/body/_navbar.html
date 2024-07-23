@@ -1,0 +1,52 @@
+{% load static i18n %}
+
+<nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+  <div class="container-fluid">
+    <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+      <li class="nav-item topbar-user dropdown hidden-caret">
+        <a class="dropdown-toggle profile-pic"
+           data-bs-toggle="dropdown"
+           aria-expanded="false">
+          <div class="avatar-sm">
+            <img class="avatar-img rounded-circle" src="{{ user.profile_photo }}" />
+          </div>
+          <span class="profile-username">
+            <span class="op-7">{% translate 'Hi' %},</span>
+            <span class="fw-bold">{{ user.username }}</span>
+          </span>
+        </a>
+        <ul class="dropdown-menu dropdown-user animated fadeIn">
+          <div class="dropdown-user-scroll scrollbar-outer">
+            <li>
+              <div class="user-box">
+                <div class="avatar-lg">
+                  <img src="{{ user.profile_photo }}"
+                       alt="image profile"
+                       class="avatar-img rounded" />
+                </div>
+                <div class="u-text">
+                  <h4>{{ user.username }}</h4>
+                  <p class="text-muted">{{ user.full_name }}</p>
+                  <p class="text-muted">{{ user.phone_number }}</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">My Profile</a>
+              <a class="dropdown-item" href="#">My Balance</a>
+              <a class="dropdown-item" href="#">Inbox</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Account Setting</a>
+              <div class="dropdown-divider"></div>
+              <form action="{% url 'account:logout' %}" method="post">
+                {% csrf_token %}
+                <input type="submit" class="dropdown-item" value="{% translate 'Logout' %}" />
+              </form>
+            </li>
+          </div>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>

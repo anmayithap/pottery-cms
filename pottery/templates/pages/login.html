@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load static crispy_forms_tags i18n %}
+
+{% block body %}
+  <div class="page-wrapper"
+       id="main-wrapper"
+       data-layout="vertical"
+       data-navbarbg="skin6"
+       data-sidebartype="full"
+       data-sidebar-position="fixed"
+       data-header-position="fixed">
+    <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+      <div class="d-flex align-items-center justify-content-center w-100">
+        <div class="row justify-content-center w-100">
+          <div class="col-md-8 col-lg-6 col-xxl-3">
+            <div class="card mb-0">
+              <div class="card-body justify-content-center">
+                <a href="{% url 'core:index' %}"
+                   class="text-nowrap logo-img text-center d-block py-3 w-100">
+                  <img src="{% static 'images/logo-light.png' %}" width="180" />
+                </a>
+                <form method="post">
+                  {% csrf_token %}
+                  {{ form|crispy }}
+                  <input class="btn btn-primary w-100 py-8 mb-4 fs-5 rounded-2"
+                         type="submit"
+                         value="{% translate 'Sign In' %}" />
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock body %}

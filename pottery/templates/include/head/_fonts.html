@@ -1,0 +1,25 @@
+{% load static %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js"
+        integrity="sha512-v/wOVTkoU7mXEJC3hXnw9AA6v32qzpknvuUF6J2Lbkasxaxn2nYcl+HGB7fr/kChGfCqubVr1n2sq1UFu3Gh1w=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Public Sans:300,400,500,600,700']
+    },
+    custom: {
+      families: [
+        'Font Awesome 5 Solid',
+        'Font Awesome 5 Regular',
+        'Font Awesome 5 Brands',
+        'simple-line-icons',
+      ],
+      urls: ["{% static 'css/fonts.min.css' %}"],
+    },
+    active: function() {
+      sessionStorage.fonts = true;
+    },
+  });
+</script>
