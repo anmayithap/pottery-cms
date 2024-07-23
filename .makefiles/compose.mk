@@ -11,3 +11,9 @@ build-local: merge-dotenv
 
 down-local:
 	$(command-prefix) down -v
+
+restart-local:
+	$(command-prefix) restart
+
+attach-instance:
+	$(command-prefix) exec instance sh
