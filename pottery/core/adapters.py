@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from typing import Self
 
 from urllib3 import PoolManager
@@ -14,7 +15,12 @@ class HTTPAdapter:
         self._retries = Retry(
             total=5,
             backoff_factor=0.2,
-            status_forcelist=[500, 502, 503, 504],
+            status_forcelist=[
+                HTTPStatus.INTERNAL_SERVER_ERROR,
+                HTTPStatus.BAD_GATEWAY,
+                HTTPStatus.SERVICE_UNAVAILABLE,
+                HTTPStatus.GATEWAY_TIMEOUT,
+            ],
         )
         self._http = PoolManager(num_pools=5, retries=self._retries)
 
