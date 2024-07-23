@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-17 15:55+0300\n"
+"POT-Creation-Date: 2024-07-23 16:55+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,59 +28,71 @@ msgstr "Английский"
 msgid "Russian"
 msgstr "Русский"
 
+#: .\config\settings\base.py:206
+msgid "Pottery CMS"
+msgstr "Гончарная CMS"
+
+#: .\config\settings\base.py:207
+msgid "CMS for something pottery"
+msgstr "CMS для какой-либо гончарной"
+
 #: .\pottery\account\apps.py:7
 msgid "Account"
 msgstr "Пользователи"
 
-#: .\pottery\account\models.py:24
+#: .\pottery\account\models.py:29
 msgid "Username"
 msgstr "Имя пользователя"
 
-#: .\pottery\account\models.py:27
+#: .\pottery\account\models.py:32
 msgid "Required. 128 characters or fewer. Letters, digits and @/./+/-/_ only."
 msgstr "Требуется не более 128 символов. Только буквы, цифры и @/./+/-/_."
 
-#: .\pottery\account\models.py:30
+#: .\pottery\account\models.py:35
 msgid "A user with that username already exists."
 msgstr "Данное имя пользователя уже зарегистрировано в системе."
 
-#: .\pottery\account\models.py:34 .\pottery\master_class\models.py:11
+#: .\pottery\account\models.py:40
+msgid "User photo"
+msgstr "Фото профиля"
+
+#: .\pottery\account\models.py:46 .\pottery\master_class\models.py:15
 msgid "First name"
 msgstr "Имя"
 
-#: .\pottery\account\models.py:35
+#: .\pottery\account\models.py:47
 msgid "Last name"
 msgstr "Фамилия"
 
-#: .\pottery\account\models.py:36
+#: .\pottery\account\models.py:48
 msgid "Middle name"
 msgstr "Отчество"
 
-#: .\pottery\account\models.py:38
+#: .\pottery\account\models.py:50
 msgid "Email"
 msgstr "Электронная почта"
 
-#: .\pottery\account\models.py:39 .\pottery\master_class\models.py:13
+#: .\pottery\account\models.py:51 .\pottery\master_class\models.py:17
 msgid "Phone number"
 msgstr "Номер телефона"
 
-#: .\pottery\account\models.py:44 .\pottery\organization\models.py:48
+#: .\pottery\account\models.py:56 .\pottery\organization\models.py:48
 msgid "Filiations"
 msgstr "Филиалы"
 
-#: .\pottery\account\models.py:48
+#: .\pottery\account\models.py:60
 msgid "Staff status"
 msgstr "Статус персонала"
 
-#: .\pottery\account\models.py:50
+#: .\pottery\account\models.py:62
 msgid "Designates whether the user can log into this admin site."
 msgstr "Указывает, может ли пользователь войти на этот сайт администратора."
 
-#: .\pottery\account\models.py:53 .\pottery\core\models.py:21
+#: .\pottery\account\models.py:65 .\pottery\core\models.py:21
 msgid "Is active?"
 msgstr "Запись активна?"
 
-#: .\pottery\account\models.py:56
+#: .\pottery\account\models.py:68
 msgid ""
 "Designates whether this user should be treated as active. Unselect this "
 "instead of deleting accounts."
@@ -88,15 +100,15 @@ msgstr ""
 "Указывает, должен ли этот пользователь считаться активным. Снимите этот "
 "флажок вместо удаления учетных записей."
 
-#: .\pottery\account\models.py:60
+#: .\pottery\account\models.py:72
 msgid "Date joined"
 msgstr "Дата присоединения"
 
-#: .\pottery\account\models.py:68
+#: .\pottery\account\models.py:80
 msgid "User"
 msgstr "Пользователь"
 
-#: .\pottery\account\models.py:69
+#: .\pottery\account\models.py:81
 msgid "Users"
 msgstr "Пользователи"
 
@@ -148,104 +160,104 @@ msgstr "Брак"
 msgid "Repeat visit"
 msgstr "Повторный визит"
 
-#: .\pottery\master_class\models.py:17 .\pottery\master_class\models.py:98
+#: .\pottery\master_class\models.py:21 .\pottery\master_class\models.py:102
 msgid "Client"
 msgstr "Клиент"
 
-#: .\pottery\master_class\models.py:18
+#: .\pottery\master_class\models.py:22
 msgid "Clients"
 msgstr "Клиенты"
 
-#: .\pottery\master_class\models.py:33 .\pottery\organization\models.py:8
+#: .\pottery\master_class\models.py:37 .\pottery\organization\models.py:8
 #: .\pottery\organization\models.py:17 .\pottery\organization\models.py:35
 msgid "Name"
 msgstr "Название"
 
-#: .\pottery\master_class\models.py:34
+#: .\pottery\master_class\models.py:38
 msgid "Visits count"
 msgstr "Количество визитов"
 
-#: .\pottery\master_class\models.py:38
+#: .\pottery\master_class\models.py:42
 msgid "Master class program"
 msgstr "Программа мастер класса"
 
-#: .\pottery\master_class\models.py:39
+#: .\pottery\master_class\models.py:43
 msgid "Master class programs"
 msgstr "Программы мастер классов"
 
-#: .\pottery\master_class\models.py:46
+#: .\pottery\master_class\models.py:50
 msgid "Visit records"
 msgstr "Записи по визиту"
 
-#: .\pottery\master_class\models.py:51
+#: .\pottery\master_class\models.py:55
 msgid "Master class visit"
 msgstr "Визит мастер класса"
 
-#: .\pottery\master_class\models.py:52
+#: .\pottery\master_class\models.py:56
 msgid "Master class visits"
 msgstr "Визиты мастер классов"
 
-#: .\pottery\master_class\models.py:60
+#: .\pottery\master_class\models.py:64
 msgid "Enrolled client"
 msgstr "Записанный клиент"
 
-#: .\pottery\master_class\models.py:66
+#: .\pottery\master_class\models.py:70
 msgid "Selected master"
 msgstr "Выбранный мастер"
 
-#: .\pottery\master_class\models.py:72
+#: .\pottery\master_class\models.py:76
 msgid "Selected master class program"
 msgstr "Выбранная программа мастер класса"
 
-#: .\pottery\master_class\models.py:77
+#: .\pottery\master_class\models.py:81
 msgid "Record workpieces"
 msgstr "Изделие"
 
-#: .\pottery\master_class\models.py:83
+#: .\pottery\master_class\models.py:87
 msgid "Master class record"
 msgstr "Запись на мастер класс"
 
-#: .\pottery\master_class\models.py:84
+#: .\pottery\master_class\models.py:88
 msgid "Master class records"
 msgstr "Записи на мастер классы"
 
-#: .\pottery\master_class\models.py:92 .\pottery\master_class\models.py:146
+#: .\pottery\master_class\models.py:96 .\pottery\master_class\models.py:153
 msgid "Photo"
 msgstr "Фотография"
 
-#: .\pottery\master_class\models.py:106
+#: .\pottery\master_class\models.py:110
 msgid "Master"
 msgstr "Мастер"
 
-#: .\pottery\master_class\models.py:111
+#: .\pottery\master_class\models.py:115
 msgid "Workpiece progress status"
 msgstr "Статус изделия"
 
-#: .\pottery\master_class\models.py:116
+#: .\pottery\master_class\models.py:120
 msgid "Glazed?"
 msgstr "Покрыто глазурью?"
 
-#: .\pottery\master_class\models.py:118
+#: .\pottery\master_class\models.py:122
 msgid "Expire date"
 msgstr "Дата просрочки"
 
-#: .\pottery\master_class\models.py:123
+#: .\pottery\master_class\models.py:127
 msgid "Comment"
 msgstr "Примечание"
 
-#: .\pottery\master_class\models.py:130
+#: .\pottery\master_class\models.py:134
 msgid "Workpiece"
 msgstr "Изделие"
 
-#: .\pottery\master_class\models.py:131
+#: .\pottery\master_class\models.py:135
 msgid "Workpieces"
 msgstr "Изделия"
 
-#: .\pottery\master_class\models.py:142
+#: .\pottery\master_class\models.py:147
 msgid "Path to file"
 msgstr "Путь к файлу"
 
-#: .\pottery\master_class\models.py:147
+#: .\pottery\master_class\models.py:154
 msgid "Photos"
 msgstr "Фотографии"
 
@@ -277,19 +289,62 @@ msgstr "Франшиза?"
 msgid "Filiation"
 msgstr "Филиал"
 
-#: .\pottery\templates\allauth\layouts\entrance.html:8
-#: .\pottery\templates\base.html:90
-msgid "Sign In"
-msgstr "Регистрация"
+#: .\pottery\templates\include\body\_navbar.html:12
+msgid "Hi"
+msgstr "Привет"
 
-#: .\pottery\templates\base.html:75
-msgid "My Profile"
-msgstr "Мой профиль"
-
-#: .\pottery\templates\base.html:79
-msgid "Sign Out"
+#: .\pottery\templates\include\body\_navbar.html:41
+msgid "Logout"
 msgstr "Выход"
 
-#: .\pottery\templates\base.html:85
-msgid "Sign Up"
-msgstr "Вход"
+#: .\pottery\templates\pages\login.html:23
+msgid "Sign In"
+msgstr "Войти"
+
+#~ msgid "Main"
+#~ msgstr "Главная"
+
+#~ msgid "Messages"
+#~ msgstr "Сообщения"
+
+#~ msgid "Static Files"
+#~ msgstr "Статика"
+
+#, fuzzy
+#~| msgid "Organization"
+#~ msgid "Syndication"
+#~ msgstr "Организация"
+
+#~ msgid "Enter a number."
+#~ msgstr "Введите число"
+
+#~ msgid "Decimal number"
+#~ msgstr "Десятичное число"
+
+#~ msgid "Duration"
+#~ msgstr "Период"
+
+#~ msgid "Enter a whole number."
+#~ msgstr "Введите целое число"
+
+#~ msgid "November"
+#~ msgstr "Ноябрь"
+
+#~ msgctxt "alt. month"
+#~ msgid "November"
+#~ msgstr "Ноябрь"
+
+#~ msgid "or"
+#~ msgstr "Или"
+
+#~ msgid "Ruslan Torbeev"
+#~ msgstr "Руслан Торбеев"
+
+#~ msgid "Arseny Sergeev"
+#~ msgstr "Арсений Сергеев"
+
+#~ msgid "My Profile"
+#~ msgstr "Мой профиль"
+
+#~ msgid "Sign Out"
+#~ msgstr "Выход"
