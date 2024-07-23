@@ -24,3 +24,11 @@ class BaseError(Exception):
             message = message.format(**format)
 
         super().__init__(message)
+
+
+class HTTPAdapterMaxRetryError(BaseError):
+    message = 'Max retries exceeded.'
+
+
+class HTTPAdapterTimeoutError(BaseError):
+    message = 'Timeout waiting for response.'
