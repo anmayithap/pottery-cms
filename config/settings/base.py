@@ -30,7 +30,7 @@ USE_I18N: Final[bool] = True
 USE_TZ: Final[bool] = True
 
 
-LANGUAGES: Final[tuple[tuple[str, str], ...]] = (
+LANGUAGES: Final[tuple[tuple[str, Any], ...]] = (
     ('en', _('English')),
     ('ru', _('Russian')),
 )
@@ -77,7 +77,7 @@ THIRD_PARTY_APPS: Final[tuple[str, ...]] = (
     'phonenumber_field',
     'crispy_forms',
     'crispy_bootstrap5',
-    'webpack_loader',
+    'compressor',
 )
 
 LOCAL_APPS: Final[tuple[str, ...]] = (
@@ -96,6 +96,10 @@ AUTHENTICATION_BACKENDS: Final[Sequence[str]] = (
 )
 
 AUTH_USER_MODEL: Final[Literal['account.User']] = 'account.User'
+
+LOGIN_URL: Final[str] = 'account:login'
+LOGIN_REDIRECT_URL: Final[str] = 'core:index'
+LOGOUT_REDIRECT_URL: Final[str] = 'account:login'
 
 # ==========> PASSWORDS SECTION
 
@@ -135,10 +139,6 @@ STATIC_ROOT: Final[Path] = BASE_DIR / 'staticfiles'
 STATIC_URL: Final[Literal['static/']] = 'static/'
 STATICFILES_DIRS: Final[Sequence[Path]] = (
     APPS_DIR / 'static',
-)
-STATICFILES_FINDERS: Final[Sequence[str]] = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
 # ==========> MEDIA SECTION
@@ -200,13 +200,8 @@ LOGGING = {
     'root': {'level': 'INFO', 'handlers': ['console']},
 }
 
-# ==========> WEBPACK SECTION
 
-WEBPACK_LOADER: Final[dict[str, Any]] = {
-    'DEFAULT': {
-        'CACHE': not DEBUG,
-        'STATS_FILE': BASE_DIR / 'webpack-stats.json',
-        'POLL_INTERVAL': 0.1,
-        'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
-    },
-}
+# ==========> CMS SECTION
+
+TITLE: Final[Any] = _('Pottery CMS')
+DESCRIPTION: Final[Any] = _('CMS for something pottery')

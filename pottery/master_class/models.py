@@ -7,6 +7,10 @@ from pottery.core.models import BaseModel
 from pottery.master_class.choices import Status
 
 
+def _upload_to(instance: 'Photo', filename: str) -> str:
+    return f'workpieces/{instance.id}-{filename}'
+
+
 class Client(BaseModel):
     first_name = models.CharField(_('First name'), max_length=32)
 
@@ -139,7 +143,10 @@ class WorkPiece(BaseModel):
 
 
 class Photo(BaseModel):
-    path = models.CharField(_('Path to file'), max_length=248)
+    path = models.ImageField(
+        _('Path to file'),
+        upload_to=_upload_to,
+    )
 
     class Meta:
         db_table = 'photo'

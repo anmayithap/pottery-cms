@@ -6,6 +6,7 @@ from django.contrib.auth.models import UserManager as StandaloneUserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.contrib.postgres import indexes
 from django.db import models
+from django.templatetags.static import static
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
@@ -13,6 +14,10 @@ from phonenumber_field.modelfields import PhoneNumberField
 _U = TypeVar('_U', bound='User')
 
 _USERNAME_VALIDATOR: Final[UnicodeUsernameValidator] = UnicodeUsernameValidator()
+
+
+def _upload_to(instance: _U, filename: str) -> str:
+    return f'profiles/{instance.username}/{filename}'
 
 
 class UserManager(Generic[_U], StandaloneUserManager):
@@ -29,6 +34,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         error_messages={
             'unique': _('A user with that username already exists.'),
         },
+    )
+
+    photo = models.ImageField(
+        _('User photo'),
+        upload_to=_upload_to,
+        blank=True,
+        null=True,
     )
 
     first_name = models.CharField(_('First name'), max_length=32)
@@ -78,6 +90,23 @@ class User(AbstractBaseUser, PermissionsMixin):
                 name='user__first_name__hash_index',
             ),
         )
+
+    @property
+    def full_name(self: Self) -> str:
+        full_name: str = ' '.join(
+            filter(
+                lambda item: bool(item),
+                (self.last_name, self.first_name, self.middle_name),
+            ),
+        )
+        return full_name.strip()
+
+    @property
+    def profile_photo(self: Self) -> str:
+        try:
+            return self.photo.url
+        except ValueError:
+            return static('images/profile/profile.jpg')
 
     def __str__(self: Self) -> str:
         return f'{self.__class__.__name__}: {self.username!s}'

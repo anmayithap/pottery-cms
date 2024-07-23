@@ -2,7 +2,7 @@
 from typing import Any, Final, Sequence
 
 from config.settings.base import *  # noqa: F403
-from config.settings.base import INSTALLED_APPS, MIDDLEWARE, WEBPACK_LOADER
+from config.settings.base import INSTALLED_APPS, MIDDLEWARE
 
 DEBUG = True
 
@@ -28,5 +28,3 @@ DEBUG_TOOLBAR_CONFIG: Final[dict[str, Any]] = {
     ),
     'SHOW_TEMPLATE_CONTEXT': True,
 }
-
-WEBPACK_LOADER['DEFAULT']['CACHE'] = not DEBUG
