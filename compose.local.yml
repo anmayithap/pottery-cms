@@ -7,9 +7,7 @@ x-base-build: &x-base-build
   volumes:
     - ./config:/opt/pottery/config:z
     - ./pottery:/opt/pottery/pottery:z
-    - type: bind
-      source: ./webpack-stats.json
-      target: /opt/pottery/webpack-stats.json
+    - ./locale:/opt/pottery/locale:z
   stdin_open: true
   tty: true
 
@@ -24,6 +22,8 @@ services:
       - -c
       - |
         python manage.py runserver 0.0.0.0:8000
+    ports:
+      - '8000:8000'
     deploy:
       resources:
         limits:
@@ -113,30 +113,6 @@ services:
         limits:
           cpus: '1'
           memory: 2G
-
-  node:
-    build:
-      context: .
-      dockerfile: docker/local/node.dockerfile
-    image: pottery-cms-static
-    container_name: pottery-cms-node
-    depends_on:
-      - instance
-    volumes:
-      - ./webpack:/opt/pottery/webpack:z
-      - ./pottery/static:/opt/pottery/pottery/static:z
-      - type: bind
-        source: ./webpack-stats.json
-        target: /opt/pottery/webpack-stats.json
-      - /opt/pottery/node_modules
-    command: npm run dev
-    ports:
-      - '3000:3000'
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 1G
 
 volumes:
   db-data:
