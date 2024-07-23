@@ -26,6 +26,8 @@ class YClientsProvider:
         return headers
 
     def _build_period(self: Self) -> str:
+        if settings.YCLIENTS_TIME_PERIOD is None:
+            raise ValueError('Не указан период времени')
         start_date = datetime.now() - timedelta(days=settings.YCLIENTS_TIME_PERIOD)
 
         return start_date.strftime('%Y-%m-%d')
@@ -34,6 +36,8 @@ class YClientsProvider:
         """Аутентификация пользователя и получение пользовательского токена."""
         url = 'https://api.yclients.com/api/v1/auth'
         data = {'login': settings.YCLIENTS_LOGIN, 'password': settings.YCLIENTS_PASSWORD}
+        if data.get('login') is None or data.get('password') is None:
+            raise ValueError('Не указаны логин или пароль')
         try:
             response = self._client.post(url=url, data=data, headers=self._build_headers())
         except (HTTPAdapterMaxRetryError, HTTPAdapterTimeoutError) as exc:

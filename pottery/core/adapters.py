@@ -1,6 +1,7 @@
 from http import HTTPStatus
-from typing import Self
+from typing import Collection, Final, Self
 
+from django.conf import settings
 from urllib3 import PoolManager
 from urllib3.exceptions import MaxRetryError, TimeoutError
 from urllib3.response import BaseHTTPResponse
@@ -12,17 +13,18 @@ from pottery.core.exceptions import HTTPAdapterMaxRetryError, HTTPAdapterTimeout
 class HTTPAdapter:
 
     def __init__(self: Self) -> None:
-        self._retries = Retry(
-            total=5,
-            backoff_factor=0.2,
-            status_forcelist=[
+        self._RETRIES_CODES: Final[Collection[int]] = [
                 HTTPStatus.INTERNAL_SERVER_ERROR,
                 HTTPStatus.BAD_GATEWAY,
                 HTTPStatus.SERVICE_UNAVAILABLE,
                 HTTPStatus.GATEWAY_TIMEOUT,
-            ],
+            ]
+        self._retries = Retry(
+            total=settings.HTTP_RETRIES_COUNT,
+            backoff_factor=settings.HTTP_RETRIES_OFFSET,
+            status_forcelist=self._RETRIES_CODES,
         )
-        self._http = PoolManager(num_pools=5, retries=self._retries)
+        self._http = PoolManager(num_pools=settings.HTTP_NUM_POOLS, retries=self._retries)
 
     def get(
         self: Self,
